@@ -500,3 +500,6 @@ select {
   .ob-panel { padding: 56px 24px 24px; }
   .ob-card { padding: 26px; }
 }
+
+/* Textes facultatifs laissés vides : pas d'espace réservé. */
+.lead:empty, .desc:empty, .ob-tagline:empty, .empty p:empty, .about p:empty { display: none; }
