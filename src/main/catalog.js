@@ -14,6 +14,7 @@ const ID_RE = /^[a-z0-9][a-z0-9-]{0,63}$/;
 const SHA_RE = /^[a-f0-9]{64}$/i;
 const COLOR_RE = /^#[0-9a-f]{6}$/i;
 const PLATFORMS = ['windows', 'macos'];
+const ARG_RE = /^[/-][A-Za-z0-9_=:.-]{0,40}$/;
 
 function isAllowedUrl(u, { allowLocalHttp }) {
   try {
@@ -70,6 +71,14 @@ function normalizeBuild(key, raw, app, opts) {
       build.displayNamePattern = raw.displayNamePattern;
     }
     if (typeof raw.executable === 'string') build.executable = raw.executable;
+    for (const k of ['installerArgs', 'uninstallerArgs']) {
+      if (raw[k] === undefined) continue;
+      // Options de ligne de commande simples uniquement (ex. "/P", "/S", "--silent").
+      if (!Array.isArray(raw[k]) || !raw[k].every((a) => typeof a === 'string' && ARG_RE.test(a))) {
+        throw new Error(`windows: invalid ${k}`);
+      }
+      build[k] = raw[k];
+    }
   } else if (key === 'macos') {
     if (typeof raw.appName !== 'string' || !/\.app$/.test(raw.appName) || raw.appName.includes('/')) {
       throw new Error('macos: appName must look like "Name.app"');

@@ -44,18 +44,18 @@ npm test
 ```
  Dépôts GitHub des logiciels            Dépôt « creative-orbit »                  Ordinateurs des membres
  ┌────────────────────────┐   lu par   ┌───────────────────────────┐  lu par   ┌────────────────────────┐
- │ Releases : .msi + .dmg │──────────▶│ catalog/catalog.json      │─────────▶│ Lanceur Creative Orbit │
+ │ Releases : .exe + .dmg │──────────▶│ catalog/catalog.json      │─────────▶│ Lanceur Creative Orbit │
  └────────────────────────┘ (Action)   │ (généré automatiquement)  │ (6 h)     │ télécharge, vérifie,   │
                                        │ Releases du lanceur       │──────────▶│ installe               │
                                        └───────────────────────────┘ mise à jour└────────────────────────┘
 ```
 
-| Étape | Windows (.msi) | macOS (.dmg) |
+| Étape | Windows (.exe NSIS ou .msi) | macOS (.dmg) |
 |---|---|---|
 | Détecter | Entrées « Applications installées » du registre, associées par `displayName` | `/Applications/<appName>` puis `~/Applications`, version lue dans `Info.plist` |
-| Installer / mettre à jour | `msiexec /i … /passive` : barre de progression Windows, et demande d'autorisation (UAC) si le MSI s'installe pour tous les utilisateurs | Montage invisible du .dmg, copie de l'app avec `ditto`, éjection. Un `.pkg` dans le .dmg est aussi accepté |
-| Désinstaller | `msiexec /x {ProductCode} /passive` | App placée dans la Corbeille |
-| Ouvrir | `executable` du catalogue (ou icône du registre) | `open` de l'app |
+| Installer / mettre à jour | `.exe` lancé en mode passif (`/P`, installateurs Tauri) ; `.msi` via `msiexec /passive`. Windows demande l'autorisation administrateur (UAC) si le logiciel s'installe pour tous les utilisateurs | Montage invisible du .dmg, copie de l'app avec `ditto`, éjection. Un `.pkg` dans le .dmg est aussi accepté |
+| Désinstaller | Désinstallateur du registre lancé avec `/P` (ou `msiexec /x` pour un MSI) | App placée dans la Corbeille |
+| Ouvrir | `executable` du catalogue, sinon l'icône enregistrée dans le registre | `open` de l'app |
 
 Le lanceur lui-même s'installe **sans droits administrateur**, pour l'utilisateur
 courant, comme Creative Cloud.
@@ -121,11 +121,12 @@ puis les ajoute à la Release. Les lanceurs déjà installés se mettent à jour
 
 Chaque logiciel a son propre dépôt GitHub **public**. Ses Releases contiennent :
 
-- **Windows** : un `.msi`
-  - le nom affiché dans « Applications installées » (`ProductName`) doit rester **identique** d'une version à l'autre (sinon, utilisez `displayNamePattern`) ;
-  - le MSI doit déclarer une **MajorUpgrade** (WiX : `<MajorUpgrade DowngradeErrorMessage="…" />`) avec un `UpgradeCode` fixe. C'est ce qui permet à une nouvelle version de remplacer l'ancienne.
-- **macOS** : un `.dmg` contenant l'app (`Mon Logiciel.app`) à sa racine
-  - l'app doit être **signée et notarisée**, sinon Gatekeeper la bloque. Le compte Apple Developer de l'association peut servir pour toute la suite ;
+- **Windows** : un installateur `.exe` NSIS (celui de Tauri) ou un `.msi`
+  - le nom affiché dans « Applications installées » doit rester **identique** d'une version à l'autre (sinon, utilisez `displayNamePattern`). Avec Tauri, c'est `productName` ;
+  - `.exe` : le lanceur passe `/P` (mode passif de Tauri). Pour un autre type d'installateur, précisez `installerArgs` et `uninstallerArgs` (ex. `["/S"]`) ;
+  - `.msi` : il doit déclarer une **MajorUpgrade** avec un `UpgradeCode` fixe.
+- **macOS** : un `.dmg` contenant l'app (`Mon Logiciel.app`) à sa racine, de préférence universel (Intel et Apple Silicon)
+  - l'app doit être au moins signée « ad hoc » (Tauri le fait). Installée par le lanceur, elle s'ouvre sans l'avertissement « Ouvrir quand même », mais une signature Developer ID et une notarisation restent recommandées ;
   - `CFBundleShortVersionString` doit contenir le numéro de version.
 - L'étiquette de la Release est le numéro de version : `v2.4.0` ou `2.4.0`.
 
@@ -144,12 +145,11 @@ Ajoutez une entrée dans `catalog/apps.json` :
   "summary":  { "fr": "Phrase courte.", "en": "Short sentence." },
   "description": { "fr": "Texte long (fiche détaillée).", "en": "Long text." },
   "windows": {
-    "asset": "\\.msi$",                   // expression régulière : quel fichier de la Release
-    "displayName": "Pixel Atelier",       // nom exact dans « Applications installées »
-    "executable": "%ProgramFiles%\\Pixel Atelier\\Pixel Atelier.exe"
+    "asset": "_x64-setup\\.exe$",         // expression régulière : quel fichier de la Release
+    "displayName": "Pixel Atelier"        // nom exact dans « Applications installées »
   },
   "macos": {
-    "asset": "\\.dmg$",
+    "asset": "_universal\\.dmg$",
     "appName": "Pixel Atelier.app"
   }
 }

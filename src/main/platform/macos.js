@@ -114,7 +114,9 @@ async function installFromDmg(file, build, detected) {
   }
   try {
     const items = await fsp.readdir(mountPoint);
-    const app = items.includes(build.appName) ? build.appName : items.find((n) => n.endsWith('.app'));
+    // Comparaison en NFC : « Numéris.app » peut être écrit sous deux formes Unicode.
+    const wanted = build.appName.normalize('NFC');
+    const app = items.find((n) => n.normalize('NFC') === wanted) || items.find((n) => n.endsWith('.app'));
     if (app) return await copyApp(path.join(mountPoint, app), build, detected);
     const pkg = items.find((n) => n.endsWith('.pkg'));
     if (pkg) return await installPkg(path.join(mountPoint, pkg));

@@ -1,5 +1,42 @@
 {
   "schemaVersion": 1,
-  "generatedAt": null,
-  "apps": []
+  "generatedAt": "2026-11-01T19:44:17.337Z",
+  "apps": [
+    {
+      "id": "afterdusk",
+      "name": "Afterdusk",
+      "version": "0.6.1",
+      "color": "#17191c",
+      "icon": "icons/afterdusk.png",
+      "category": {
+        "fr": "Photo",
+        "en": "Photo"
+      },
+      "summary": {
+        "fr": "Importer, trier, retoucher et livrer vos photos, RAW compris.",
+        "en": "Import, sort, edit and deliver your photos, RAW included."
+      },
+      "description": {
+        "fr": "Logiciel libre et gratuit pour les photographes semi-pro.\n\nImporter depuis une carte, un dossier ou un boîtier en FTP, avec copies vérifiées. Trier à la grille et à la visionneuse : notes, drapeaux, rafales regroupées, photos floues repérées. Retoucher les RAW de la plupart des boîtiers sans toucher aux originaux. Livrer en JPEG, PNG, TIFF, AVIF ou HEIF, en galerie web ou en planche contact PDF.",
+        "en": "Free and open-source software for semi-pro photographers.\n\nImport from a card, a folder or a camera over FTP, with verified copies. Sort in grid and loupe views: ratings, flags, grouped bursts, blurry shots detected. Edit RAW files from most cameras without touching the originals. Deliver as JPEG, PNG, TIFF, AVIF or HEIF, as a web gallery or a PDF contact sheet."
+      },
+      "homepage": "https://github.com/fluxcroises/afterdusk",
+      "releaseNotesUrl": "https://github.com/fluxcroises/afterdusk/releases/tag/v0.6.1",
+      "platforms": {
+        "windows": {
+          "url": "https://github.com/fluxcroises/afterdusk/releases/download/v0.6.1/Afterdusk_0.6.1_x64-setup.exe",
+          "sha256": "14eac0f169450e9ad20275a0ccc735ef98e4ef2d7f44c3df60281a75e6a00b21",
+          "size": 77078609,
+          "displayName": "Afterdusk"
+        },
+        "macos": {
+          "url": "https://github.com/fluxcroises/afterdusk/releases/download/v0.6.1/Afterdusk_0.6.1_universal.dmg",
+          "sha256": "b281629594a33f9ca5746673dbd45eb202100eddf01c6f62f50905cefe64078c",
+          "size": 189096554,
+          "appName": "Afterdusk.app",
+          "bundleId": "app.afterdusk"
+        }
+      }
+    }
+  ]
 }

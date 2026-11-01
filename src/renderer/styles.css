@@ -169,7 +169,7 @@ p { margin: 0; }
   background: linear-gradient(180deg, var(--brand-1), var(--brand-2), var(--brand-3));
 }
 .nav-item .label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.nav-item .dot { width: 8px; height: 8px; border-radius: 3px; margin: 0 5px; flex: none; }
+.nav-item .dot { width: 8px; height: 8px; border-radius: 3px; margin: 0 5px; flex: none; box-shadow: 0 0 0 1px var(--border-strong); }
 .badge {
   min-width: 20px; height: 20px; padding: 0 6px; border-radius: 10px;
   background: var(--primary); color: var(--primary-text);

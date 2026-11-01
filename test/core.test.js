@@ -238,6 +238,28 @@ test('Windows : association au registre et exécutable', () => {
   assert.throws(() => win.checkMsiExit(1603, 'INSTALL_FAILED'), { code: 'INSTALL_FAILED' });
 });
 
+test('Windows : installateurs .exe (NSIS)', () => {
+  assert.deepEqual(win.parseCommand('"C:\\Program Files\\Flux Croisés\\Afterdusk\\uninstall.exe"'),
+    { exe: 'C:\\Program Files\\Flux Croisés\\Afterdusk\\uninstall.exe', args: '' });
+  assert.deepEqual(win.parseCommand('C:\\App\\unins000.exe /SILENT'), { exe: 'C:\\App\\unins000.exe', args: '/SILENT' });
+  assert.ok(win.matches({ displayName: 'Numéris' }, { DisplayName: 'Nume\u0301ris' }), 'NFC/NFD');
+  assert.deepEqual(win.checkExeExit({ code: 0 }, 'INSTALL_FAILED'), { rebootRequired: false });
+  assert.throws(() => win.checkExeExit({ code: 1223 }, 'INSTALL_FAILED'), { code: 'CANCELLED' });
+  assert.throws(() => win.checkExeExit({ code: 2 }, 'INSTALL_FAILED'), { code: 'INSTALL_FAILED' });
+});
+
+test('catalogue : options d’installateur limitées à des drapeaux simples', () => {
+  const mk = (args) => validApp({ platforms: { windows: { url: 'https://e.org/a.exe', sha256: SHA, displayName: 'A', installerArgs: args } } });
+  assert.deepEqual(parseCatalog({ schemaVersion: 1, apps: [mk(['/S'])] }).apps[0].platforms.windows.installerArgs, ['/S']);
+  assert.equal(parseCatalog({ schemaVersion: 1, apps: [mk(['/S & calc'])] }).apps.length, 0);
+});
+
+test('catalogue : le fichier du dépôt est valide', () => {
+  const json = fs.readFileSync(path.join(__dirname, '..', 'catalog', 'catalog.json'), 'utf8');
+  const r = parseCatalog(json, { baseUrl: 'https://raw.githubusercontent.com/fluxcroises/creative-orbit/main/catalog/catalog.json' });
+  assert.deepEqual(r.warnings, []);
+});
+
 test('macOS : échappement des commandes', () => {
   assert.equal(mac.shq("L'Atelier.app"), `'L'\\''Atelier.app'`);
   assert.equal(mac.asq('a "b" \\c'), '"a \\"b\\" \\\\c"');

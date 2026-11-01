@@ -1,3 +1,54 @@
 {
-  "apps": []
+  "apps": [
+    {
+      "id": "afterdusk",
+      "name": "Afterdusk",
+      "repo": "fluxcroises/afterdusk",
+      "color": "#17191c",
+      "icon": "icons/afterdusk.png",
+      "category": { "fr": "Photo", "en": "Photo" },
+      "summary": {
+        "fr": "Importer, trier, retoucher et livrer vos photos, RAW compris.",
+        "en": "Import, sort, edit and deliver your photos, RAW included."
+      },
+      "description": {
+        "fr": "Logiciel libre et gratuit pour les photographes semi-pro.\n\nImporter depuis une carte, un dossier ou un boîtier en FTP, avec copies vérifiées. Trier à la grille et à la visionneuse : notes, drapeaux, rafales regroupées, photos floues repérées. Retoucher les RAW de la plupart des boîtiers sans toucher aux originaux. Livrer en JPEG, PNG, TIFF, AVIF ou HEIF, en galerie web ou en planche contact PDF.",
+        "en": "Free and open-source software for semi-pro photographers.\n\nImport from a card, a folder or a camera over FTP, with verified copies. Sort in grid and loupe views: ratings, flags, grouped bursts, blurry shots detected. Edit RAW files from most cameras without touching the originals. Deliver as JPEG, PNG, TIFF, AVIF or HEIF, as a web gallery or a PDF contact sheet."
+      },
+      "windows": {
+        "asset": "_x64-setup\\.exe$",
+        "displayName": "Afterdusk"
+      },
+      "macos": {
+        "asset": "_universal\\.dmg$",
+        "appName": "Afterdusk.app",
+        "bundleId": "app.afterdusk"
+      }
+    },
+    {
+      "id": "numeris",
+      "name": "Numéris",
+      "repo": "fluxcroises/numeris",
+      "color": "#ff8266",
+      "icon": "icons/numeris.png",
+      "category": { "fr": "Vidéo", "en": "Video" },
+      "summary": {
+        "fr": "Numérisez vos cassettes vidéo de famille, sans connaissances techniques.",
+        "en": "Digitize your family video tapes, no technical knowledge needed."
+      },
+      "description": {
+        "fr": "Numéris guide n'importe qui de la cassette posée sur la table jusqu'au film de famille rangé, retrouvable et partageable.\n\nVHS, VHS-C, S-VHS, Video8, Hi8, Digital8, MiniDV, et fichiers déjà numérisés. Tout reste sur l'ordinateur, et un master d'archive fidèle à la bande est toujours conservé.",
+        "en": "Numéris guides anyone from the tape on the table to a family film that is stored, easy to find and easy to share.\n\nVHS, VHS-C, S-VHS, Video8, Hi8, Digital8, MiniDV, and files that are already digitized. Everything stays on the computer, and an archival master faithful to the tape is always kept."
+      },
+      "windows": {
+        "asset": "_x64-setup\\.exe$",
+        "displayName": "Numéris"
+      },
+      "macos": {
+        "asset": "_universal\\.dmg$",
+        "appName": "Numéris.app",
+        "bundleId": "app.numeris"
+      }
+    }
+  ]
 }

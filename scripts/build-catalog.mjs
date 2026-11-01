@@ -82,6 +82,8 @@ async function main() {
         displayName: win && win.displayName,
         ...(win && win.displayNamePattern ? { displayNamePattern: win.displayNamePattern } : {}),
         ...(win && win.executable ? { executable: win.executable } : {}),
+        ...(win && win.installerArgs ? { installerArgs: win.installerArgs } : {}),
+        ...(win && win.uninstallerArgs ? { uninstallerArgs: win.uninstallerArgs } : {}),
       });
       if (w) platforms.windows = w;
       const m = await buildPlatform(rel, mac, {
