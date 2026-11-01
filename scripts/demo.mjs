@@ -78,8 +78,8 @@ function catalog() {
       return {
         id: a.id, name: a.name, version: a.version, color: a.color,
         category: a.category, summary: a.summary, description: a.description,
-        homepage: `https://github.com/MON-ASSO/${a.id}`,
-        releaseNotesUrl: `https://github.com/MON-ASSO/${a.id}/releases/tag/v${a.version}`,
+        homepage: 'https://github.com/fluxcroises/creative-orbit',
+        releaseNotesUrl: 'https://github.com/fluxcroises/creative-orbit/releases',
         platforms,
       };
     }),

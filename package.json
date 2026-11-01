@@ -8,7 +8,7 @@
   "author": "Creative Orbit",
   "license": "UNLICENSED",
   "orbit": {
-    "catalogUrl": "https://raw.githubusercontent.com/MON-ASSO/creative-orbit/main/catalog/catalog.json"
+    "catalogUrl": "https://raw.githubusercontent.com/fluxcroises/creative-orbit/main/catalog/catalog.json"
   },
   "scripts": {
     "start": "electron .",

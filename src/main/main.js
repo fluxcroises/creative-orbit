@@ -30,7 +30,7 @@ if (SIMULATE) {
   app.setPath('userData', path.join(app.getPath('appData'), 'Creative Orbit Demo'));
 }
 app.setName('Creative Orbit');
-if (IS_WIN) app.setAppUserModelId('org.creativeorbit.launcher');
+if (IS_WIN) app.setAppUserModelId('com.fluxcroises.creativeorbit');
 
 if (!app.requestSingleInstanceLock()) {
   app.quit();

@@ -10,6 +10,8 @@ Depuis une seule fenêtre, on peut **installer**, **ouvrir**, **mettre à jour**
 - Interface en français et en anglais, thème sombre, clair ou celui du système, et charte du kit Creative Orbit.
 - Le lanceur se met à jour tout seul (Releases GitHub).
 
+![Creative Orbit, thème sombre](docs/captures/1-all-dark.png)
+
 ---
 
 ## 1. Essayer tout de suite (mode démo)
@@ -64,12 +66,9 @@ courant, comme Creative Cloud.
 
 ### 3.1 Dépôt GitHub du lanceur
 
-1. Créez un dépôt **public** `creative-orbit` dans le compte GitHub de l'association et poussez-y ce dossier.
-2. Remplacez `MON-ASSO` par le nom de ce compte dans :
-   - `package.json` → `orbit.catalogUrl`
-   - `electron-builder.yml` → `publish.owner`
-   - `catalog/apps.json` → `repo` de chaque logiciel
-3. Facultatif : changez `appId` dans `electron-builder.yml` (ex. `org.monasso.creativeorbit`). Faites-le **avant** la première publication, car il ne doit plus changer ensuite.
+Le dépôt est [fluxcroises/creative-orbit](https://github.com/fluxcroises/creative-orbit).
+Il doit rester **public** : les lanceurs y lisent le catalogue et y téléchargent leurs mises à jour.
+L'identifiant de l'application (`appId`) est `com.fluxcroises.creativeorbit` ; il ne doit plus changer.
 
 ### 3.2 Signature macOS (compte Apple Developer)
 
@@ -138,7 +137,7 @@ Ajoutez une entrée dans `catalog/apps.json` :
 {
   "id": "pixel-atelier",                  // minuscules, chiffres et tirets ; ne doit jamais changer
   "name": "Pixel Atelier",
-  "repo": "MON-ASSO/pixel-atelier",       // dépôt GitHub du logiciel
+  "repo": "fluxcroises/pixel-atelier",       // dépôt GitHub du logiciel
   "color": "#d9480f",                     // couleur de la vignette si pas d'icône
   "icon": "icons/pixel-atelier.png",      // facultatif : PNG carré dans catalog/icons/
   "category": { "fr": "Graphisme", "en": "Graphics" },
@@ -176,7 +175,7 @@ Pour une publication immédiate après chaque version d'un logiciel, ajoutez cet
 
 ```yaml
 - name: Prévenir Creative Orbit
-  run: gh api repos/MON-ASSO/creative-orbit/dispatches -f event_type=app-released
+  run: gh api repos/fluxcroises/creative-orbit/dispatches -f event_type=app-released
   env:
     GH_TOKEN: ${{ secrets.CATALOG_TOKEN }}
 ```

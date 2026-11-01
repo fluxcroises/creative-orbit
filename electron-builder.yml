@@ -1,6 +1,6 @@
 # Configuration de construction des installateurs du lanceur.
-# Remplacez MON-ASSO par le compte GitHub de l'association (voir README).
-appId: org.creativeorbit.launcher
+# Configuration de construction des installateurs du lanceur (voir README).
+appId: com.fluxcroises.creativeorbit
 productName: Creative Orbit
 copyright: Copyright © Creative Orbit
 
@@ -15,7 +15,7 @@ files:
 # Les mises à jour du lanceur lui-même sont publiées dans les Releases GitHub.
 publish:
   provider: github
-  owner: MON-ASSO
+  owner: fluxcroises
   repo: creative-orbit
   releaseType: release
 
