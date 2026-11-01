@@ -1,9 +1,9 @@
 # Construit et publie le lanceur, au choix :
-#   - en poussant une étiquette « v* » (ex. v0.2.0) ;
-#   - ou depuis l'onglet Actions → « Publier le lanceur » → Run workflow.
-# La version publiée est celle de package.json : la Release « v<version> » et
-# son étiquette sont créées si besoin. Les installateurs et les fichiers de mise
-# à jour automatique (latest.yml, latest-mac.yml) y sont ajoutés.
+#   - depuis l'onglet Actions → « Publier le lanceur » → Run workflow ;
+#   - ou en poussant une étiquette « v* » (ex. v0.2.0).
+# La version publiée est celle de package.json. Windows et macOS sont construits
+# en parallèle ; la Release « v<version> » n'est créée qu'à la fin, et seulement
+# si les deux constructions ont réussi : jamais de Release incomplète.
 name: Publier le lanceur
 
 on:
@@ -12,12 +12,16 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
 
 jobs:
   build:
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         os: [windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
@@ -32,15 +36,12 @@ jobs:
 
       - name: Windows (installateur NSIS)
         if: runner.os == 'Windows'
-        run: npx electron-builder --win --publish always
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx electron-builder --win --publish never
 
       - name: macOS (signé et notarisé)
         if: runner.os == 'macOS'
-        run: npx electron-builder --mac --publish always
+        run: npx electron-builder --mac --publish never
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Certificat « Developer ID Application » exporté en .p12, encodé en base64
           CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
           CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_PASSWORD }}
@@ -48,3 +49,41 @@ jobs:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lanceur-${{ runner.os }}
+          if-no-files-found: error
+          retention-days: 7
+          path: |
+            dist/*.exe
+            dist/*.dmg
+            dist/*.zip
+            dist/*.blockmap
+            dist/latest*.yml
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Release GitHub
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(node -p "require('./package.json').version")
+          ls -l dist
+          if gh release view "v$version" > /dev/null 2>&1; then
+            echo "::error::La Release v$version existe déjà. Augmentez « version » dans package.json."
+            exit 1
+          fi
+          gh release create "v$version" dist/* \
+            --target "$GITHUB_SHA" \
+            --title "Creative Orbit $version" \
+            --notes "Creative Orbit $version"
