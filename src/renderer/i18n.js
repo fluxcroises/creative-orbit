@@ -131,7 +131,7 @@ window.I18N = {
     'settings.about.body': '',
 
     'ob.step': 'Étape {n} sur {total}',
-    'ob.tagline': '',
+    'ob.tagline': 'Suite créative libre et gratuite',
     'ob.welcome.title': 'Bienvenue dans Creative Orbit',
     'ob.welcome.body': '',
     'ob.language': 'Langue',
@@ -150,7 +150,7 @@ window.I18N = {
     'ob.finish': 'Ouvrir Creative Orbit',
     'assoc.by': 'Proposé par',
     'assoc.link': 'flux-croises.fr',
-    'settings.about.assoc': 'Association à but non lucratif pour rendre la photographie, la vidéo et les arts visuels accessibles à tous, gratuitement.',
+    'settings.about.assoc': 'Suite créative libre et gratuite, développée par Flux Croisés.',
     'settings.onboarding': 'Revoir l’accueil',
 
     'os.windows': 'Windows',
@@ -289,7 +289,7 @@ window.I18N = {
     'settings.about.body': '',
 
     'ob.step': 'Step {n} of {total}',
-    'ob.tagline': '',
+    'ob.tagline': 'Free and open-source creative suite',
     'ob.welcome.title': 'Welcome to Creative Orbit',
     'ob.welcome.body': '',
     'ob.language': 'Language',
@@ -308,7 +308,7 @@ window.I18N = {
     'ob.finish': 'Open Creative Orbit',
     'assoc.by': 'Brought to you by',
     'assoc.link': 'flux-croises.fr',
-    'settings.about.assoc': 'Non-profit association making photography, video and the visual arts accessible to everyone, for free.',
+    'settings.about.assoc': 'Free and open-source creative suite, made by Flux Croisés.',
     'settings.onboarding': 'Show welcome screen',
 
     'os.windows': 'Windows',

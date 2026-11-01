@@ -2,7 +2,7 @@
   "name": "creative-orbit",
   "productName": "Creative Orbit",
   "version": "0.2.0",
-  "description": "Lanceur de la suite Creative Orbit : installer, mettre à jour et désinstaller les logiciels de l'association.",
+  "description": "Creative Orbit, suite créative libre et gratuite.",
   "main": "src/main/main.js",
   "private": true,
   "author": {
