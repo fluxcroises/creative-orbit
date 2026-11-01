@@ -212,7 +212,7 @@
     const meta = [cat, a.latestVersion ? t('status.version', { v: a.latestVersion }) : ''].filter(Boolean).join(' · ');
     let foot;
     if (a.op) foot = progress(a) + cancelButton(a);
-    else if (!a.available) foot = `<p class="meta">${esc(t('status.notAvailable', { os: osName() }))}</p>`;
+    else if (!a.available) foot = '';
     else foot = mainButtons(a);
     return `<article class="card${a.available ? '' : ' muted'}" data-id="${a.id}">
       <div class="card-head">
@@ -438,7 +438,7 @@
         <button class="btn btn-primary" data-action="launcher-install">${esc(t('launcher.restart'))}</button></div>` : ''}
       ${item('settings', I.settings, t('nav.settings'))}
       <button class="assoc-link" data-action="link" data-url="${ASSOC_URL}" title="${esc(t('assoc.link'))}" aria-label="${esc(t('assoc.link'))}">
-        <span class="assoc-caption">${esc(t('assoc.by'))}</span>${assocLogo()}
+        ${assocLogo()}
       </button>`;
   }
 
@@ -472,15 +472,13 @@
     const eyebrow = `<p class="ob-eyebrow">${esc(t('ob.step', { n: ob.step + 1, total: 3 }))}</p>`;
     if (ob.step === 0) {
       const l = lang();
+      const opt = (code, label) => `<button class="ob-choice" role="radio" aria-checked="${l === code}" data-action="set"
+        data-key="language" data-value="${code}" data-fk="ob-lang-${code}"><span class="radio" aria-hidden="true"></span>${label}</button>`;
       return `${dots}${eyebrow}
         <h1 id="ob-title">${esc(t('ob.welcome.title'))}</h1>
-        <p class="lead">${esc(t('ob.welcome.body'))}</p>
+        <p class="lead" id="ob-lang">${esc(t('ob.welcome.body'))}</p>
         <div class="ob-rule"></div>
-        <span class="ob-field-label" id="ob-lang">${esc(t('ob.language'))}</span>
-        <div class="segmented" role="radiogroup" aria-labelledby="ob-lang">
-          <button role="radio" aria-checked="${l === 'fr'}" data-action="set" data-key="language" data-value="fr" data-fk="ob-lang-fr">Français</button>
-          <button role="radio" aria-checked="${l === 'en'}" data-action="set" data-key="language" data-value="en" data-fk="ob-lang-en">English</button>
-        </div>
+        <div class="ob-choices" role="radiogroup" aria-labelledby="ob-lang">${opt('fr', 'Français')}${opt('en', 'English')}</div>
         <div class="ob-actions"><button class="btn btn-primary btn-lg" data-action="ob-next" data-fk="ob-start">${esc(t('ob.start'))}</button></div>`;
     }
     if (ob.step === 1) {
@@ -509,7 +507,7 @@
       <div class="ob-rule"></div>
       <div class="ob-option">
         <div class="text"><label class="label" for="ob-login">${esc(t('settings.launchAtLogin'))}</label>
-          <p class="desc">${esc(t('settings.launchAtLogin.desc'))}</p></div>
+          <p class="desc">${esc(t('ob.login.desc'))}</p></div>
         <span class="switch"><input type="checkbox" role="switch" id="ob-login" data-ob-login data-fk="ob-login" ${ob.launchAtLogin ? 'checked' : ''}><span class="track"></span></span>
       </div>
       <div class="ob-actions"><button class="btn btn-primary btn-lg" data-action="ob-finish" data-fk="ob-finish">${esc(t('ob.finish'))}</button></div>`;
@@ -530,8 +528,7 @@
       <div class="ob-visual">
         <img class="ob-logo" src="assets/brand/creative-orbit-logo-empile-sombre.svg" alt="Creative Orbit">
         <p class="ob-tagline">${esc(t('ob.tagline'))}</p>
-        <div class="ob-assoc"><span>${esc(t('assoc.by'))}</span>
-          <img src="assets/association/flux-croises-horizontal-blanc.png" alt="Flux Croisés"></div>
+        <div class="ob-assoc"><img src="assets/association/flux-croises-horizontal-blanc.png" alt="Flux Croisés"></div>
       </div>
       <div class="ob-panel"><div class="ob-card">${onboardingStep()}</div></div>
     </div>`;
