@@ -1,0 +1,29 @@
+{
+  "name": "creative-orbit",
+  "productName": "Creative Orbit",
+  "version": "0.1.0",
+  "description": "Lanceur de la suite Creative Orbit : installer, mettre à jour et désinstaller les logiciels de l'association.",
+  "main": "src/main/main.js",
+  "private": true,
+  "author": "Creative Orbit",
+  "license": "UNLICENSED",
+  "orbit": {
+    "catalogUrl": "https://raw.githubusercontent.com/MON-ASSO/creative-orbit/main/catalog/catalog.json"
+  },
+  "scripts": {
+    "start": "electron .",
+    "demo": "node scripts/demo.mjs",
+    "test": "node --test test/*.test.js",
+    "catalog": "node scripts/build-catalog.mjs",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win",
+    "dist:mac": "electron-builder --mac"
+  },
+  "dependencies": {
+    "electron-updater": "6.8.11"
+  },
+  "devDependencies": {
+    "electron": "45.2.1",
+    "electron-builder": "26.18.0"
+  }
+}

@@ -1,0 +1,60 @@
+# Configuration de construction des installateurs du lanceur.
+# Remplacez MON-ASSO par le compte GitHub de l'association (voir README).
+appId: org.creativeorbit.launcher
+productName: Creative Orbit
+copyright: Copyright © Creative Orbit
+
+directories:
+  buildResources: build
+  output: dist
+
+files:
+  - src/**/*
+  - package.json
+
+# Les mises à jour du lanceur lui-même sont publiées dans les Releases GitHub.
+publish:
+  provider: github
+  owner: MON-ASSO
+  repo: creative-orbit
+  releaseType: release
+
+# ---------- Windows ----------
+win:
+  icon: build/icon.ico
+  target:
+    - target: nsis
+      arch: [x64, arm64]
+
+nsis:
+  # Installation par utilisateur : aucun droit administrateur requis
+  # pour installer le lanceur (comme Creative Cloud).
+  oneClick: true
+  perMachine: false
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Creative Orbit
+  artifactName: Creative-Orbit-Setup-${version}.${ext}
+  installerLanguages: [fr_FR, en_US]
+  deleteAppDataOnUninstall: false
+
+# ---------- macOS ----------
+mac:
+  icon: build/icon.icns
+  category: public.app-category.productivity
+  target:
+    - target: dmg
+      arch: [universal]
+    - target: zip # nécessaire aux mises à jour automatiques
+      arch: [universal]
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: build/entitlements.mac.plist
+  entitlementsInherit: build/entitlements.mac.plist
+  # Signature : variables CSC_LINK / CSC_KEY_PASSWORD (certificat « Developer ID Application »).
+  # Notarisation : variables APPLE_ID, APPLE_APP_SPECIFIC_PASSWORD, APPLE_TEAM_ID.
+  notarize: true
+
+dmg:
+  artifactName: Creative-Orbit-${version}.${ext}
+  title: Creative Orbit
