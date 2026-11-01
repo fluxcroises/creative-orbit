@@ -1,5 +1,7 @@
 # Construit et publie le lanceur, au choix :
-#   - depuis l'onglet Actions → « Publier le lanceur » → Run workflow ;
+#   - depuis l'onglet Actions → « Publier le lanceur » → Run workflow
+#     (décocher « Publier » pour un essai : les installateurs restent
+#     téléchargeables 7 jours sur la page de l'exécution, sans Release) ;
 #   - ou en poussant une étiquette « v* » (ex. v0.2.0).
 # La version publiée est celle de package.json. Windows et macOS sont construits
 # en parallèle ; la Release « v<version> » n'est créée qu'à la fin, et seulement
@@ -10,6 +12,11 @@ on:
   push:
     tags: ['v*']
   workflow_dispatch:
+    inputs:
+      publier:
+        description: Créer la Release (décocher pour un simple essai)
+        type: boolean
+        default: true
 
 permissions:
   contents: read
@@ -64,6 +71,7 @@ jobs:
 
   release:
     needs: build
+    if: github.event_name == 'push' || inputs.publier
     runs-on: ubuntu-latest
     permissions:
       contents: write
