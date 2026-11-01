@@ -91,7 +91,13 @@ jobs:
             echo "::error::La Release v$version existe déjà. Augmentez « version » dans package.json."
             exit 1
           fi
-          gh release create "v$version" dist/* \
-            --target "$GITHUB_SHA" \
+          # Étiquette déjà présente : on s'y rattache sans la déplacer (GitHub
+          # refuse de déplacer une étiquette depuis une tâche automatique).
+          if gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/v$version" > /dev/null 2>&1; then
+            target=(--verify-tag)
+          else
+            target=(--target "$GITHUB_SHA")
+          fi
+          gh release create "v$version" dist/* "${target[@]}" \
             --title "Creative Orbit $version" \
             --notes "Creative Orbit $version"
