@@ -1,0 +1,25 @@
+<!doctype html>
+<!-- Source du fond de la fenêtre .dmg (macOS). Régénérer build/background.png
+     et background@2x.png à partir de ce fichier (540 × 380 px, Retina ×2). -->
+<html><head><meta charset="utf-8"><style>
+  @font-face { font-family: Plex; src: url('../../src/renderer/assets/fonts/IBMPlexSans-SemiBold.ttf'); font-weight: 600; }
+  html, body { margin: 0; width: 540px; height: 380px; overflow: hidden; }
+  body {
+    background: radial-gradient(120% 90% at 50% 0%, #ffffff 0%, #f4f5f9 55%, #e9ebf3 100%);
+    font-family: -apple-system, 'Helvetica Neue', sans-serif; color: #17181f; position: relative;
+  }
+  .logo { position: absolute; top: 34px; left: 50%; transform: translateX(-50%); height: 28px; }
+  .hint { position: absolute; top: 80px; width: 100%; text-align: center; font-size: 13px; color: #575c70; }
+  .arrow { position: absolute; left: 212px; top: 180px; width: 116px; height: 32px; }
+  .assoc { position: absolute; bottom: 22px; left: 0; right: 0; display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 10px; color: #6b7085; }
+  .assoc img { height: 11px; }
+</style></head><body>
+  <img class="logo" src="creative-orbit-logo-horizontal-clair.svg" alt="">
+  <div class="hint">Glissez Creative Orbit dans Applications · Drag Creative Orbit to Applications</div>
+  <svg class="arrow" viewBox="0 0 116 32" fill="none">
+    <defs><linearGradient id="g" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="116" y2="0"><stop offset="0" stop-color="#0e7fae"/><stop offset=".5" stop-color="#4b3fd6"/><stop offset="1" stop-color="#a03cbf"/></linearGradient></defs>
+    <path d="M6 16h96" stroke="url(#g)" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 10"/>
+    <path d="M96 6l12 10-12 10" stroke="#a03cbf" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <div class="assoc"><span>Proposé par</span><img src="flux-croises-horizontal-noir.png" alt=""></div>
+</body></html>

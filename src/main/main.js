@@ -30,6 +30,12 @@ if (SIMULATE) {
   app.setPath('userData', path.join(app.getPath('appData'), 'Creative Orbit Demo'));
 }
 app.setName('Creative Orbit');
+app.setAboutPanelOptions({
+  applicationName: 'Creative Orbit',
+  copyright: '© 2026 Flux Croisés',
+  credits: 'Flux Croisés · flux-croises.fr',
+  website: 'https://flux-croises.fr',
+});
 if (IS_WIN) app.setAppUserModelId('com.fluxcroises.creativeorbit');
 
 if (!app.requestSingleInstanceLock()) {

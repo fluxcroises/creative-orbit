@@ -1,7 +1,7 @@
 # Configuration de construction des installateurs du lanceur (voir README).
 appId: com.fluxcroises.creativeorbit
 productName: Creative Orbit
-copyright: Copyright © Creative Orbit
+copyright: © 2026 Flux Croisés
 
 directories:
   buildResources: build
@@ -57,3 +57,17 @@ mac:
 dmg:
   artifactName: Creative-Orbit-${version}.${ext}
   title: Creative Orbit
+  # Fond : build/background.png et build/background@2x.png (Retina).
+  background: build/background.png
+  iconSize: 96
+  window:
+    width: 540
+    height: 380
+  contents:
+    - x: 140
+      y: 196
+      type: file
+    - x: 400
+      y: 196
+      type: link
+      path: /Applications

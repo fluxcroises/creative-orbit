@@ -403,6 +403,14 @@
         <img class="brand-dark" src="assets/brand/creative-orbit-logo-empile-sombre.svg" alt="Creative Orbit">
         <img class="brand-light" src="assets/brand/creative-orbit-logo-empile-clair.svg" alt="Creative Orbit">
         <div><p>${esc(t('settings.about.body'))}</p><p class="version">Creative Orbit ${esc(P.launcher.version)}</p></div>
+      </div>
+      <div class="settings-card about-assoc">
+        <div class="assoc-mark">${assocLogo()}</div>
+        <div><p>${esc(t('settings.about.assoc'))}</p>
+          <div class="links">
+            <button class="btn btn-link" data-action="link" data-url="${ASSOC_URL}">flux-croises.fr ${I.external}</button>
+            <button class="btn btn-link" data-action="ob-reset" data-fk="ob-reset">${esc(t('settings.onboarding'))}</button>
+          </div></div>
       </div></section>`;
   }
 
@@ -428,7 +436,112 @@
       <div class="sidebar-spacer"></div>
       ${lu.status === 'ready' ? `<div class="launcher-card">${esc(t('launcher.ready', { v: lu.version }))}
         <button class="btn btn-primary" data-action="launcher-install">${esc(t('launcher.restart'))}</button></div>` : ''}
-      ${item('settings', I.settings, t('nav.settings'))}`;
+      ${item('settings', I.settings, t('nav.settings'))}
+      <button class="assoc-link" data-action="link" data-url="${ASSOC_URL}" title="${esc(t('assoc.link'))}" aria-label="${esc(t('assoc.link'))}">
+        <span class="assoc-caption">${esc(t('assoc.by'))}</span>${assocLogo()}
+      </button>`;
+  }
+
+  // ---------- logo de l'association ----------
+
+  const ASSOC_URL = 'https://flux-croises.fr';
+  function assocLogo() {
+    return `<img class="assoc-dark" src="assets/association/flux-croises-horizontal-blanc.png" alt="Flux Croisés">
+      <img class="assoc-light" src="assets/association/flux-croises-horizontal-noir.png" alt="Flux Croisés">`;
+  }
+
+  // ---------- écran d'accueil (premier lancement) ----------
+
+  const ob = { step: 0, selected: new Set(), launchAtLogin: true, started: 0 };
+  const onboardingVisible = () => !!P && !P.settings.onboarded;
+
+  function obAppRow(a) {
+    const installed = !!a.installed;
+    const checked = installed || ob.selected.has(a.id);
+    const meta = installed ? t('ob.apps.installed') : [tx(a.category), fmtSize(a.size)].filter(Boolean).join(' · ');
+    return `<label class="ob-app${installed ? ' disabled' : ''}">
+      <input type="checkbox" data-ob-app="${a.id}" data-fk="ob-app:${a.id}" ${checked ? 'checked' : ''} ${installed ? 'disabled' : ''}>
+      ${tile(a)}
+      <span class="info"><span class="name">${esc(a.name)}</span><span class="meta">${esc(tx(a.summary))}</span></span>
+      <span class="meta size">${esc(meta)}</span>
+    </label>`;
+  }
+
+  function onboardingStep() {
+    const dots = `<div class="ob-dots" aria-hidden="true">${[0, 1, 2].map((i) => `<span class="${i <= ob.step ? 'on' : ''}"></span>`).join('')}</div>`;
+    const eyebrow = `<p class="ob-eyebrow">${esc(t('ob.step', { n: ob.step + 1, total: 3 }))}</p>`;
+    if (ob.step === 0) {
+      const l = lang();
+      return `${dots}${eyebrow}
+        <h1 id="ob-title">${esc(t('ob.welcome.title'))}</h1>
+        <p class="lead">${esc(t('ob.welcome.body'))}</p>
+        <div class="ob-rule"></div>
+        <span class="ob-field-label" id="ob-lang">${esc(t('ob.language'))}</span>
+        <div class="segmented" role="radiogroup" aria-labelledby="ob-lang">
+          <button role="radio" aria-checked="${l === 'fr'}" data-action="set" data-key="language" data-value="fr" data-fk="ob-lang-fr">Français</button>
+          <button role="radio" aria-checked="${l === 'en'}" data-action="set" data-key="language" data-value="en" data-fk="ob-lang-en">English</button>
+        </div>
+        <div class="ob-actions"><button class="btn btn-primary btn-lg" data-action="ob-next" data-fk="ob-start">${esc(t('ob.start'))}</button></div>`;
+    }
+    if (ob.step === 1) {
+      const s = P.state;
+      const apps = s.apps.filter((a) => a.available);
+      let list;
+      if (!s.loadedOnce) list = `<div class="ob-apps" aria-busy="true">${'<div class="ob-app skeleton" style="height:62px"></div>'.repeat(2)}</div>`;
+      else if (!apps.length) list = `<p class="lead">${esc(t('ob.apps.none'))}</p>`;
+      else list = `<div class="ob-apps">${apps.map(obAppRow).join('')}</div>`;
+      const n = [...ob.selected].filter((id) => apps.some((a) => a.id === id && !a.installed)).length;
+      return `${dots}${eyebrow}
+        <h1 id="ob-title">${esc(t('ob.apps.title'))}</h1>
+        <p class="lead">${esc(t('ob.apps.body'))}</p>
+        <div class="ob-rule"></div>
+        ${list}
+        <div class="ob-actions">
+          <button class="btn btn-ghost btn-lg" data-action="ob-back" data-fk="ob-back">${esc(t('ob.back'))}</button>
+          <span class="spacer"></span>
+          <button class="btn btn-primary btn-lg" data-action="ob-install" data-fk="ob-install">${esc(n ? t('ob.install', { n }) : t('ob.continue'))}</button>
+        </div>`;
+    }
+    const body = ob.started === 1 ? t('ob.done.started.one') : ob.started > 1 ? t('ob.done.started.many', { n: ob.started }) : t('ob.done.body');
+    return `${dots}${eyebrow}
+      <h1 id="ob-title">${esc(t('ob.done.title'))}</h1>
+      <p class="lead">${esc(body)}</p>
+      <div class="ob-rule"></div>
+      <div class="ob-option">
+        <div class="text"><label class="label" for="ob-login">${esc(t('settings.launchAtLogin'))}</label>
+          <p class="desc">${esc(t('settings.launchAtLogin.desc'))}</p></div>
+        <span class="switch"><input type="checkbox" role="switch" id="ob-login" data-ob-login data-fk="ob-login" ${ob.launchAtLogin ? 'checked' : ''}><span class="track"></span></span>
+      </div>
+      <div class="ob-actions"><button class="btn btn-primary btn-lg" data-action="ob-finish" data-fk="ob-finish">${esc(t('ob.finish'))}</button></div>`;
+  }
+
+  function renderOnboarding() {
+    const root = $('#onboarding-root');
+    const visible = onboardingVisible();
+    $('.shell').inert = visible;
+    if (!visible) {
+      root.innerHTML = '';
+      delete root.dataset.key;
+      return;
+    }
+    const firstShow = !root.firstElementChild;
+    const html = `<div class="onboarding${firstShow ? ' enter' : ''}" role="dialog" aria-modal="true" aria-labelledby="ob-title">
+      <div class="ob-drag"></div>
+      <div class="ob-visual">
+        <img class="ob-logo" src="assets/brand/creative-orbit-logo-empile-sombre.svg" alt="Creative Orbit">
+        <p class="ob-tagline">${esc(t('ob.tagline'))}</p>
+        <div class="ob-assoc"><span>${esc(t('assoc.by'))}</span>
+          <img src="assets/association/flux-croises-horizontal-blanc.png" alt="Flux Croisés"></div>
+      </div>
+      <div class="ob-panel"><div class="ob-card">${onboardingStep()}</div></div>
+    </div>`;
+    // Redessiné seulement si le contenu change (sinon les mises à jour de
+    // progression le feraient clignoter et perdre le focus).
+    const key = html.replace(' enter', '');
+    if (root.dataset.key === key) return;
+    root.dataset.key = key;
+    root.innerHTML = html;
+    if (firstShow) focusFirst('.ob-card [data-fk="ob-start"]');
   }
 
   // ---------- fenêtres modales ----------
@@ -526,6 +639,7 @@
     renderSidebar();
     renderContent();
     renderOverlay();
+    renderOnboarding();
     announceErrors();
 
     $('#content').scrollTop = scrollTop;
@@ -614,11 +728,44 @@
       case 'close-overlay':
         closeOverlay();
         return;
+      case 'ob-next':
+      case 'ob-back':
+        ob.step = Math.max(0, Math.min(2, ob.step + (action === 'ob-next' ? 1 : -1)));
+        render();
+        focusFirst('.ob-card h1');
+        return;
+      case 'ob-install': {
+        const ids = [...ob.selected].filter((x) => P.state.apps.some((a) => a.id === x && a.available && !a.installed));
+        ids.forEach((x) => api.install(x));
+        ob.started = ids.length;
+        ob.step = 2;
+        render();
+        focusFirst('.ob-card h1');
+        return;
+      }
+      case 'ob-finish':
+        api.setSettings({ onboarded: true, launchAtLogin: ob.launchAtLogin });
+        ui.view = 'all';
+        return;
+      case 'ob-reset':
+        Object.assign(ob, { step: 0, started: 0 });
+        ob.selected.clear();
+        api.setSettings({ onboarded: false });
+        return;
     }
     render();
   });
 
   document.addEventListener('change', (e) => {
+    if (e.target.dataset.obApp) {
+      if (e.target.checked) ob.selected.add(e.target.dataset.obApp);
+      else ob.selected.delete(e.target.dataset.obApp);
+      return render();
+    }
+    if (e.target.dataset.obLogin !== undefined) {
+      ob.launchAtLogin = e.target.checked;
+      return;
+    }
     const el = e.target.closest('[data-setting]');
     if (!el) return;
     const value = el.type === 'checkbox' ? el.checked : el.value;
@@ -640,7 +787,7 @@
 
   document.addEventListener('keydown', (e) => {
     const mod = e.ctrlKey || e.metaKey;
-    if (mod && e.key.toLowerCase() === 'f') {
+    if (mod && e.key.toLowerCase() === 'f' && !onboardingVisible()) {
       e.preventDefault();
       $('#search').focus();
       $('#search').select();
@@ -648,6 +795,7 @@
       e.preventDefault();
       api.refresh();
     } else if (e.key === 'Escape') {
+      if (onboardingVisible()) return;
       if (ui.menuFor) {
         const fk = `menu:${ui.menuFor}`;
         ui.menuFor = null;
@@ -666,9 +814,10 @@
       const i = items.indexOf(document.activeElement);
       const next = items[(i + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length];
       if (next) next.focus();
-    } else if (e.key === 'Tab' && (ui.detailId || ui.confirm)) {
-      // Garde le focus dans la fenêtre modale.
-      const f = [...document.querySelectorAll('.dialog button, .dialog [href], .dialog input')].filter((x) => !x.disabled);
+    } else if (e.key === 'Tab' && (ui.detailId || ui.confirm || onboardingVisible())) {
+      // Garde le focus dans la fenêtre modale (ou l'écran d'accueil).
+      const scope = onboardingVisible() ? '.onboarding' : '.dialog';
+      const f = [...document.querySelectorAll(`${scope} button, ${scope} [href], ${scope} input`)].filter((x) => !x.disabled);
       if (!f.length) return;
       const first = f[0];
       const last = f[f.length - 1];

@@ -9,6 +9,7 @@ const DEFAULTS = Object.freeze({
   runInBackground: true, // fermer la fenêtre laisse le lanceur dans la barre des tâches / des menus
   autoCheck: true, // vérifie les mises à jour toutes les 6 heures
   catalogUrl: '', // vide = adresse définie dans package.json
+  onboarded: false, // écran d'accueil déjà vu
 });
 
 const VALIDATORS = {
@@ -18,6 +19,7 @@ const VALIDATORS = {
   runInBackground: (v) => typeof v === 'boolean',
   autoCheck: (v) => typeof v === 'boolean',
   catalogUrl: (v) => typeof v === 'string' && (v === '' || /^https:\/\//.test(v)),
+  onboarded: (v) => typeof v === 'boolean',
 };
 
 class Settings {

@@ -1,11 +1,14 @@
 {
   "name": "creative-orbit",
   "productName": "Creative Orbit",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Lanceur de la suite Creative Orbit : installer, mettre à jour et désinstaller les logiciels de l'association.",
   "main": "src/main/main.js",
   "private": true,
-  "author": "Creative Orbit",
+  "author": {
+    "name": "Flux Croisés",
+    "url": "https://flux-croises.fr"
+  },
   "license": "UNLICENSED",
   "orbit": {
     "catalogUrl": "https://raw.githubusercontent.com/fluxcroises/creative-orbit/main/catalog/catalog.json"
@@ -25,5 +28,6 @@
   "devDependencies": {
     "electron": "45.2.1",
     "electron-builder": "26.18.0"
-  }
+  },
+  "homepage": "https://github.com/fluxcroises/creative-orbit"
 }

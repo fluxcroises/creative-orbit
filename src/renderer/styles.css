@@ -408,3 +408,95 @@ select {
 }
 
 .card .message { margin: -4px 0 14px; }
+
+/* ---------- logo de l'association ---------- */
+
+[data-theme='dark'] .assoc-light, [data-theme='light'] .assoc-dark { display: none; }
+
+.assoc-link {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
+  margin-top: 10px; padding: 14px 10px 2px;
+  border: 0; border-top: 1px solid var(--border); border-radius: 0;
+  background: transparent; color: var(--text-3); font: inherit; text-align: left; cursor: pointer;
+}
+.assoc-link .assoc-caption { font-size: 11px; }
+.assoc-link img { height: 13px; width: auto; opacity: 0.8; transition: opacity 0.15s; }
+.assoc-link:hover img { opacity: 1; }
+
+.about-assoc { display: flex; align-items: center; gap: 28px; padding: 22px 18px; margin-top: 12px; }
+.about-assoc .assoc-mark { flex: none; width: 168px; }
+.about-assoc .assoc-mark img { width: 100%; height: auto; }
+.about-assoc p { color: var(--text-2); }
+.about-assoc .links { margin-top: 10px; gap: 20px; }
+
+/* ---------- écran d'accueil ---------- */
+
+.onboarding {
+  position: fixed; inset: 0; z-index: 40;
+  display: grid; grid-template-columns: minmax(300px, 42%) 1fr;
+  background: var(--chrome);
+  user-select: none;
+}
+.onboarding.enter { animation: fade 0.25s ease; }
+.ob-drag { position: absolute; top: 0; left: 0; right: 0; height: 40px; -webkit-app-region: drag; z-index: 1; }
+
+/* Visuel : toujours sur fond spatial, donc toujours les versions claires des logos. */
+.ob-visual {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 72px 36px 96px; text-align: center;
+  background: #07070c url('assets/brand/fond-spatial.svg') center / cover no-repeat;
+}
+.ob-logo { width: min(280px, 78%); height: auto; }
+.ob-tagline { margin-top: 22px; max-width: 300px; color: #b9bdd0; font-size: 15px; line-height: 1.5; }
+.ob-assoc {
+  position: absolute; left: 0; right: 0; bottom: 32px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  color: #8d92a8; font-size: 12px;
+}
+.ob-assoc img { height: 17px; width: auto; }
+
+.ob-panel { display: grid; place-items: center; padding: 56px 40px 40px; overflow-y: auto; }
+.ob-card {
+  width: min(500px, 100%); min-height: 440px;
+  display: flex; flex-direction: column;
+  padding: 32px; border-radius: 14px;
+  background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow);
+}
+.ob-dots { display: flex; gap: 6px; margin-bottom: 18px; }
+.ob-dots span { width: 28px; height: 4px; border-radius: 2px; background: var(--surface-3); }
+.ob-dots span.on { background: linear-gradient(90deg, var(--brand-1), var(--brand-2), var(--brand-3)); }
+.ob-eyebrow { font-size: 12px; font-weight: 600; color: var(--accent-text); }
+.ob-card h1 { margin-top: 6px; font-size: 26px; outline: none; }
+.ob-card .lead { margin-top: 10px; color: var(--text-2); font-size: 15px; }
+.ob-rule { height: 1px; margin: 22px 0; background: var(--border); }
+.ob-field-label { display: block; margin-bottom: 10px; font-weight: 600; }
+
+.ob-apps { display: flex; flex-direction: column; gap: 8px; }
+.ob-app {
+  display: grid; grid-template-columns: auto auto 1fr auto; align-items: center; gap: 12px;
+  padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; cursor: pointer;
+}
+.ob-app:hover { background: var(--surface-2); }
+.ob-app:has(input:checked:not(:disabled)) { border-color: var(--primary); }
+.ob-app input { width: 18px; height: 18px; margin: 0; accent-color: var(--primary); cursor: inherit; }
+.ob-app .tile { --size: 38px; }
+.ob-app .info { display: flex; flex-direction: column; min-width: 0; }
+.ob-app .name { font-weight: 600; }
+.ob-app .meta { font-size: 12px; color: var(--text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ob-app .size { color: var(--text-3); }
+.ob-app.disabled { cursor: default; opacity: 0.75; }
+
+.ob-option { display: flex; align-items: center; gap: 20px; }
+.ob-option .text { flex: 1; }
+.ob-option .label { font-weight: 600; }
+.ob-option .desc { margin-top: 2px; font-size: 13px; color: var(--text-2); }
+
+.ob-actions { display: flex; align-items: center; gap: 8px; justify-content: flex-end; margin-top: auto; padding-top: 28px; }
+.ob-actions .spacer { flex: 1; }
+.btn-lg { height: 38px; padding: 0 20px; font-size: 14px; }
+
+@media (max-width: 960px) {
+  .ob-panel { padding: 56px 24px 24px; }
+  .ob-card { padding: 26px; }
+}
