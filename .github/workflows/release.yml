@@ -1,11 +1,15 @@
-# Construit et publie le lanceur quand on pousse une étiquette « v* » (ex. v0.2.0).
-# Les installateurs et les fichiers de mise à jour automatique (latest.yml,
-# latest-mac.yml) sont ajoutés à la Release GitHub correspondante.
+# Construit et publie le lanceur, au choix :
+#   - en poussant une étiquette « v* » (ex. v0.2.0) ;
+#   - ou depuis l'onglet Actions → « Publier le lanceur » → Run workflow.
+# La version publiée est celle de package.json : la Release « v<version> » et
+# son étiquette sont créées si besoin. Les installateurs et les fichiers de mise
+# à jour automatique (latest.yml, latest-mac.yml) y sont ajoutés.
 name: Publier le lanceur
 
 on:
   push:
     tags: ['v*']
+  workflow_dispatch:
 
 permissions:
   contents: write
