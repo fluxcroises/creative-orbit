@@ -39,6 +39,9 @@ nsis:
 
 # ---------- macOS ----------
 mac:
+  # Nom sans espace : GitHub remplace les espaces des fichiers par des points,
+  # ce qui casserait le lien du fichier de mise à jour latest-mac.yml.
+  artifactName: Creative-Orbit-${version}-${arch}-mac.${ext}
   icon: build/icon.icns
   category: public.app-category.productivity
   target:
