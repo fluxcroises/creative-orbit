@@ -1,6 +1,6 @@
 # Creative Orbit
 
-Le lanceur des logiciels de l'association, sur le modèle d'Adobe Creative Cloud.
+Le lanceur de la suite créative Creative Orbit.
 Depuis une seule fenêtre, on peut **installer**, **ouvrir**, **mettre à jour** et
 **désinstaller** tous les logiciels de la suite, sous **Windows** et **macOS**.
 
