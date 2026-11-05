@@ -49,6 +49,28 @@
         "appName": "Numéris.app",
         "bundleId": "app.numeris"
       }
+    },
+    {
+      "id": "remanence",
+      "name": "Remanence",
+      "repo": "fluxcroises/remanence",
+      "color": "#b07cc6",
+      "icon": "icons/remanence.png",
+      "category": { "fr": "Vidéo", "en": "Video" },
+      "summary": {
+        "fr": "Montage vidéo tourné vers le datamosh et le glitch art.",
+        "en": "Video editing built for datamosh and glitch art."
+      },
+      "description": {
+        "fr": "Logiciel libre de montage vidéo pour les artistes du glitch.\n\nMonter dans une timeline à la Vegas Pro ou vite dans l'espace Cut. Faire baver les plans par le codec (suppression d'images clés, FFglitch), poser une trentaine d'effets glitch en temps réel, animés par images clés, courbes, masques suivis et modulateurs, casser le son avec six effets audio. Exporter en ProRes, DNxHR, H.264, HEVC, AV1 ou WebM : les images sans effet gardent exactement les pixels de la source.",
+        "en": "Free and open-source video editor for glitch artists.\n\nEdit in a Vegas Pro style timeline or fast in the Cut workspace. Make shots bleed through the codec (keyframe removal, FFglitch), apply some thirty real-time glitch effects animated with keyframes, curves, tracked masks and modulators, break the sound with six audio effects. Export to ProRes, DNxHR, H.264, HEVC, AV1 or WebM: frames without effects keep the exact pixels of the source."
+      },
+      "windows": {
+        "asset": "-installation\\.exe$",
+        "displayName": "Remanence",
+        "installerArgs": ["/SILENT", "/SUPPRESSMSGBOXES", "/NORESTART"],
+        "uninstallerArgs": ["/SILENT", "/SUPPRESSMSGBOXES", "/NORESTART"]
+      }
     }
   ]
 }
