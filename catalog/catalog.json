@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-05T17:28:22.475Z",
+  "generatedAt": "2026-11-11T00:38:55.835Z",
   "apps": [
     {
       "id": "afterdusk",
       "name": "Afterdusk",
-      "version": "0.6.1",
+      "version": "0.7.0",
       "color": "#17191c",
       "icon": "icons/afterdusk.png",
       "category": {
@@ -21,18 +21,18 @@
         "en": "Free and open-source software for semi-pro photographers.\n\nImport from a card, a folder or a camera over FTP, with verified copies. Sort in grid and loupe views: ratings, flags, grouped bursts, blurry shots detected. Edit RAW files from most cameras without touching the originals. Deliver as JPEG, PNG, TIFF, AVIF or HEIF, as a web gallery or a PDF contact sheet."
       },
       "homepage": "https://github.com/fluxcroises/afterdusk",
-      "releaseNotesUrl": "https://github.com/fluxcroises/afterdusk/releases/tag/v0.6.1",
+      "releaseNotesUrl": "https://github.com/fluxcroises/afterdusk/releases/tag/v0.7.0",
       "platforms": {
         "windows": {
-          "url": "https://github.com/fluxcroises/afterdusk/releases/download/v0.6.1/Afterdusk_0.6.1_x64-setup.exe",
-          "sha256": "14eac0f169450e9ad20275a0ccc735ef98e4ef2d7f44c3df60281a75e6a00b21",
-          "size": 77078609,
+          "url": "https://github.com/fluxcroises/afterdusk/releases/download/v0.7.0/Afterdusk_0.7.0_x64-setup.exe",
+          "sha256": "30cb6fcb57da763bfbbed29c185050c251dc511c10a705f4e75701942d782015",
+          "size": 77086827,
           "displayName": "Afterdusk"
         },
         "macos": {
-          "url": "https://github.com/fluxcroises/afterdusk/releases/download/v0.6.1/Afterdusk_0.6.1_universal.dmg",
-          "sha256": "b281629594a33f9ca5746673dbd45eb202100eddf01c6f62f50905cefe64078c",
-          "size": 189096554,
+          "url": "https://github.com/fluxcroises/afterdusk/releases/download/v0.7.0/Afterdusk_0.7.0_universal.dmg",
+          "sha256": "a50849b1862f255b0bcb1151409ac0e9d347c1aafdde1b715e752402bb678e95",
+          "size": 189131590,
           "appName": "Afterdusk.app",
           "bundleId": "app.afterdusk"
         }
